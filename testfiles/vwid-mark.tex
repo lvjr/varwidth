@@ -1,0 +1,30 @@
+\documentclass{article}
+
+\input{regression-test}
+
+%\showoutput
+
+\begin{document}
+
+\START
+
+\mark{A running head}
+
+\BEGINTEST{one line text}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\mark{A running head}
+abcdefg
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\BEGINTEST{long line text}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\mark{A running head}
+The quick brown fox jumps over the lazy dog.
+The quick brown fox jumps over the lazy dog.
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\end{document}

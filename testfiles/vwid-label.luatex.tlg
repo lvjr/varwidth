@@ -1,0 +1,172 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: one line text
+============================================================
+> \box...=
+\hbox(7.05501+2.055)x33.34, direction TLT
+.\mathon
+.\vbox(7.05501+2.055)x33.34, direction TLT
+..\write1{\newlabel{aaa}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(7.05+2.06)x33.34, direction TLT
+...\kern0.0
+...\localpar
+....\localinterlinepenalty=0
+....\localbrokenpenalty=0
+....\localleftbox=null
+....\localrightbox=null
+...\hbox(0.0+0.0)x0.0, direction TLT
+...\TU/lmr/m/n/10 a
+...\TU/lmr/m/n/10 b
+...\kern0.28 (font)
+...\TU/lmr/m/n/10 c
+...\TU/lmr/m/n/10 d
+...\TU/lmr/m/n/10 e
+...\TU/lmr/m/n/10 f
+...\TU/lmr/m/n/10 g
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 2: long line text
+============================================================
+> \box...=
+\hbox(19.05501+14.055)x163.7, direction TLT
+.\mathon
+.\vbox(19.05501+14.055)x163.7, direction TLT
+..\write1{\newlabel{bbb}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(7.05+2.05)x163.7, glue set 0.4985, direction TLT
+...\kern0.0
+...\localpar
+....\localinterlinepenalty=0
+....\localbrokenpenalty=0
+....\localleftbox=null
+....\localrightbox=null
+...\hbox(0.0+0.0)x0.0, direction TLT
+...\TU/lmr/m/n/10 T
+...\TU/lmr/m/n/10 h
+...\TU/lmr/m/n/10 e
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 q
+...\TU/lmr/m/n/10 u
+...\TU/lmr/m/n/10 i
+...\TU/lmr/m/n/10 c
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 k
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 b
+...\TU/lmr/m/n/10 r
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 w
+...\TU/lmr/m/n/10 n
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 f
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 x
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 j
+...\TU/lmr/m/n/10 u
+...\TU/lmr/m/n/10 m
+...\TU/lmr/m/n/10 p
+...\TU/lmr/m/n/10 s
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 v
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 e
+...\TU/lmr/m/n/10 r
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 t
+...\TU/lmr/m/n/10 h
+...\TU/lmr/m/n/10 e
+...\glue(\rightskip) 0.0
+...\kern0.0
+..\glue 2.9
+..\hbox(7.05+2.06)x163.7, direction TLT
+...\kern0.0
+...\TU/lmr/m/n/10 l
+...\TU/lmr/m/n/10 a
+...\TU/lmr/m/n/10 z
+...\TU/lmr/m/n/10 y
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 d
+...\TU/lmr/m/n/10 o
+...\TU/lmr/m/n/10 g
+...\TU/lmr/m/n/10 .
+...\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+...\TU/lmr/m/n/10 T
+...\TU/lmr/m/n/10 h
+...\TU/lmr/m/n/10 e
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 q
+...\TU/lmr/m/n/10 u
+...\TU/lmr/m/n/10 i
+...\TU/lmr/m/n/10 c
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 k
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 b
+...\TU/lmr/m/n/10 r
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 w
+...\TU/lmr/m/n/10 n
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 f
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 x
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 j
+...\TU/lmr/m/n/10 u
+...\TU/lmr/m/n/10 m
+...\TU/lmr/m/n/10 p
+...\TU/lmr/m/n/10 s
+...\glue(\rightskip) 0.0
+...\kern0.0
+..\glue 3.0
+..\hbox(6.94+2.06)x163.7, glue set 81.45999fil, direction TLT
+...\kern0.0
+...\TU/lmr/m/n/10 o
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 v
+...\kern-0.28 (font)
+...\TU/lmr/m/n/10 e
+...\TU/lmr/m/n/10 r
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 t
+...\TU/lmr/m/n/10 h
+...\TU/lmr/m/n/10 e
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 l
+...\TU/lmr/m/n/10 a
+...\TU/lmr/m/n/10 z
+...\TU/lmr/m/n/10 y
+...\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 d
+...\TU/lmr/m/n/10 o
+...\TU/lmr/m/n/10 g
+...\TU/lmr/m/n/10 .
+...\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+...\write1{\newlabel{ccc}{{}{\thepage }{}{}{}}}
+...\penalty 10000
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+[1
+] (vwid-label.aux)

@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\input{regression-test}
+
+%\showoutput
+
+\begin{document}
+
+\START
+
+\BEGINTEST{one line itemize}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\begin{itemize}
+ \item abcdefg
+ \item hijklmn
+\end{itemize}
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\BEGINTEST{one line enumerate}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\begin{enumerate}
+ \item abcdefg
+ \item hijklmn
+\end{enumerate}
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\BEGINTEST{long line itemize}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\begin{itemize}
+ \item The quick brown fox jumps over the lazy dog.
+ \item The quick brown fox jumps over the lazy dog.
+\end{itemize}
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\BEGINTEST{long line enumerate}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\begin{enumerate}
+ \item The quick brown fox jumps over the lazy dog.
+ \item The quick brown fox jumps over the lazy dog.
+\end{enumerate}
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\end{document}

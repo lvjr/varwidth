@@ -1,0 +1,30 @@
+\documentclass{article}
+
+\input{regression-test}
+
+\usepackage{xcolor}
+
+%\showoutput
+
+\begin{document}
+
+\START
+
+\BEGINTEST{one line text}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\color{red}
+abcdefg
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\BEGINTEST{long line text}
+\setbox0=\hbox{\begin{varwidth}{6cm}
+\color{blue}
+The quick brown fox jumps over the lazy dog.
+The quick brown fox jumps over the lazy dog.
+\end{varwidth}}
+\fbox{\usebox0}\showbox0
+\ENDTEST
+
+\end{document}

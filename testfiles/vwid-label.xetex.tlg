@@ -1,0 +1,91 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: one line text
+============================================================
+> \box...=
+\hbox(7.055+2.055)x33.34
+.\mathon
+.\vbox(7.055+2.055)x33.34
+..\write1{\newlabel{aaa}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(7.05+2.05998)x33.34
+...\kern 0.0
+...\hbox(0.0+0.0)x0.0
+...\TU/lmr/m/n/10 abcdefg
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 2: long line text
+============================================================
+> \box...=
+\hbox(19.055+14.055)x163.7
+.\mathon
+.\vbox(19.055+14.055)x163.7
+..\write1{\newlabel{bbb}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(7.05+2.04999)x163.7, glue set 0.4985
+...\kern 0.0
+...\hbox(0.0+0.0)x0.0
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 over
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 the
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 2.90001
+..\hbox(7.05+2.05998)x163.7
+...\kern 0.0
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\glue 4.44 plus 4.99498 minus 0.37
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.00002
+..\hbox(6.94+2.05998)x163.7, glue set 81.45999fil
+...\kern 0.0
+...\TU/lmr/m/n/10 over
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 the
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\glue 4.44 plus 4.99498 minus 0.37
+...\write1{\newlabel{ccc}{{}{\thepage }{}{}{}}}
+...\penalty 10000
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+[1
+] (vwid-label.aux)

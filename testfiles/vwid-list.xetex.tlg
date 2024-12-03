@@ -1,0 +1,292 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: one line itemize
+============================================================
+> \box...=
+\hbox(15.05+10.04999)x58.35
+.\mathon
+.\vbox(15.05+10.04999)x58.35
+..\glue -4.0 plus -2.0 minus -1.0
+..\hbox(7.05+2.05998)x58.35, glue set 0.01001fil
+...\kern 25.0
+...\hbox(3.75+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(3.75+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(3.75+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 •
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 abcdefg
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 3.00002
+..\hbox(6.94+2.04999)x58.35
+...\kern 25.0
+...\hbox(3.75+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(3.75+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(3.75+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 •
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 hijklmn
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 2: one line enumerate
+============================================================
+> \box...=
+\hbox(15.05+10.04999)x58.35
+.\mathon
+.\vbox(15.05+10.04999)x58.35
+..\glue -4.0 plus -2.0 minus -1.0
+..\hbox(7.05+2.05998)x58.35, glue set 0.01001fil
+...\kern 25.0
+...\hbox(6.66+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(6.66+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.66+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 1.
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 abcdefg
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 3.00002
+..\hbox(6.94+2.04999)x58.35
+...\kern 25.0
+...\hbox(6.66+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(6.66+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.66+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 2.
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 hijklmn
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 3: long line itemize
+============================================================
+> \box...=
+\hbox(27.055+22.055)x166.5
+.\mathon
+.\vbox(27.055+22.055)x166.5
+..\glue -4.0 plus -2.0 minus -1.0
+..\hbox(7.05+2.04999)x166.5
+...\kern 25.0
+...\hbox(3.75+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(3.75+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(3.75+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 •
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 over
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.01001
+..\hbox(6.94+2.05998)x166.5, glue set 85.11fil
+...\kern 25.0
+...\TU/lmr/m/n/10 the
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 2.89001
+..\hbox(7.05+2.04999)x166.5
+...\kern 25.0
+...\hbox(3.75+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(3.75+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(3.75+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 •
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 over
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.01001
+..\hbox(6.94+2.05998)x166.5, glue set 85.11fil
+...\kern 25.0
+...\TU/lmr/m/n/10 the
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 4: long line enumerate
+============================================================
+> \box...=
+\hbox(27.055+22.055)x166.5
+.\mathon
+.\vbox(27.055+22.055)x166.5
+..\glue -4.0 plus -2.0 minus -1.0
+..\hbox(7.05+2.04999)x166.5
+...\kern 25.0
+...\hbox(6.66+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(6.66+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.66+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 1.
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 over
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.01001
+..\hbox(6.94+2.05998)x166.5, glue set 85.11fil
+...\kern 25.0
+...\TU/lmr/m/n/10 the
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 4.0 plus 2.0 minus 1.0
+..\glue 2.89001
+..\hbox(7.05+2.04999)x166.5
+...\kern 25.0
+...\hbox(6.66+0.0)x0.0
+....\glue 0.0
+....\glue -20.0
+....\glue -5.0
+....\hbox(6.66+0.0)x20.0, glue set 20.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.66+0.0)x0.0, glue set - 7.78fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 2.
+....\glue 5.0
+...\penalty 0
+...\TU/lmr/m/n/10 The
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 quick
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 brown
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 fox
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 jumps
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 over
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.01001
+..\hbox(6.94+2.05998)x166.5, glue set 85.11fil
+...\kern 25.0
+...\TU/lmr/m/n/10 the
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 lazy
+...\glue 3.33 plus 1.665 minus 1.11
+...\TU/lmr/m/n/10 dog.
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+[1
+] (vwid-list.aux)

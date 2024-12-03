@@ -1,0 +1,162 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: one line text
+============================================================
+> \box...=
+\hbox(6.94444+1.94444)x33.33342
+.\mathon
+.\vbox(6.94444+1.94444)x33.33342
+..\write1{\newlabel{aaa}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(6.94444+1.94444)x33.33342
+...\kern 0.0
+...\hbox(0.0+0.0)x0.0
+...\OT1/cmr/m/n/10 a
+...\OT1/cmr/m/n/10 b
+...\kern0.27779
+...\OT1/cmr/m/n/10 c
+...\OT1/cmr/m/n/10 d
+...\OT1/cmr/m/n/10 e
+...\OT1/cmr/m/n/10 f
+...\OT1/cmr/m/n/10 g
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+============================================================
+TEST 2: long line text
+============================================================
+> \box...=
+\hbox(18.94444+13.94444)x163.69476
+.\mathon
+.\vbox(18.94444+13.94444)x163.69476
+..\write1{\newlabel{bbb}{{}{\thepage }{}{}{}}}
+..\glue 0.0
+..\hbox(6.94444+1.94444)x163.69476, glue set 0.49722
+...\kern 0.0
+...\hbox(0.0+0.0)x0.0
+...\OT1/cmr/m/n/10 T
+...\OT1/cmr/m/n/10 h
+...\OT1/cmr/m/n/10 e
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 q
+...\OT1/cmr/m/n/10 u
+...\OT1/cmr/m/n/10 i
+...\OT1/cmr/m/n/10 c
+...\kern-0.27779
+...\OT1/cmr/m/n/10 k
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 b
+...\OT1/cmr/m/n/10 r
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 w
+...\OT1/cmr/m/n/10 n
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 f
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 x
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 j
+...\OT1/cmr/m/n/10 u
+...\OT1/cmr/m/n/10 m
+...\OT1/cmr/m/n/10 p
+...\OT1/cmr/m/n/10 s
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 v
+...\kern-0.27779
+...\OT1/cmr/m/n/10 e
+...\OT1/cmr/m/n/10 r
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 t
+...\OT1/cmr/m/n/10 h
+...\OT1/cmr/m/n/10 e
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.11111
+..\hbox(6.94444+1.94444)x163.69476
+...\kern 0.0
+...\OT1/cmr/m/n/10 l
+...\OT1/cmr/m/n/10 a
+...\OT1/cmr/m/n/10 z
+...\OT1/cmr/m/n/10 y
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 d
+...\OT1/cmr/m/n/10 o
+...\OT1/cmr/m/n/10 g
+...\OT1/cmr/m/n/10 .
+...\glue 4.44444 plus 4.99997 minus 0.37036
+...\OT1/cmr/m/n/10 T
+...\OT1/cmr/m/n/10 h
+...\OT1/cmr/m/n/10 e
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 q
+...\OT1/cmr/m/n/10 u
+...\OT1/cmr/m/n/10 i
+...\OT1/cmr/m/n/10 c
+...\kern-0.27779
+...\OT1/cmr/m/n/10 k
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 b
+...\OT1/cmr/m/n/10 r
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 w
+...\OT1/cmr/m/n/10 n
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 f
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 x
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 j
+...\OT1/cmr/m/n/10 u
+...\OT1/cmr/m/n/10 m
+...\OT1/cmr/m/n/10 p
+...\OT1/cmr/m/n/10 s
+...\glue(\rightskip) 0.0
+...\kern 0.0
+..\glue 3.11111
+..\hbox(6.94444+1.94444)x163.69476, glue set 81.44463fil
+...\kern 0.0
+...\OT1/cmr/m/n/10 o
+...\kern-0.27779
+...\OT1/cmr/m/n/10 v
+...\kern-0.27779
+...\OT1/cmr/m/n/10 e
+...\OT1/cmr/m/n/10 r
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 t
+...\OT1/cmr/m/n/10 h
+...\OT1/cmr/m/n/10 e
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 l
+...\OT1/cmr/m/n/10 a
+...\OT1/cmr/m/n/10 z
+...\OT1/cmr/m/n/10 y
+...\glue 3.33333 plus 1.66666 minus 1.11111
+...\OT1/cmr/m/n/10 d
+...\OT1/cmr/m/n/10 o
+...\OT1/cmr/m/n/10 g
+...\OT1/cmr/m/n/10 .
+...\glue 4.44444 plus 4.99997 minus 0.37036
+...\write1{\newlabel{ccc}{{}{\thepage }{}{}{}}}
+...\penalty 10000
+...\penalty 10000
+...\glue(\parfillskip) 0.0 plus 1.0fil
+...\glue(\rightskip) 0.0
+...\kern 0.0
+.\mathoff
+! OK.
+l. ...\fbox{\usebox0}\showbox0
+============================================================
+[1
+] (vwid-label.aux)
