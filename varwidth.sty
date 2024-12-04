@@ -10,55 +10,65 @@
 
 \ProvidesExplPackage{varwidth}{2024-12-03}{2024A}{Variable-width minipages}
 
-\newcommand\narrowragged{\rightskip \z@ plus .25\hsize 
-  \@rightskip\rightskip \parfillskip\z@ plus .15\hsize
-  \sloppy }
+\cs_new_protected:Npn \narrowragged {
+  \rightskip \z@ plus .25\hsize
+  \@rightskip \rightskip
+  \parfillskip \z@ plus .15\hsize
+  \sloppy
+}
 
-\newbox\@vwid@box
+\box_new:N \l__vwid_box
 
 % The varwidth environment is based on minipage, and takes the same
 % parameters, but the specified width is only a limit -- a narrower
 % natural width may be used.  \varwidth uses \minipage.
 
-\def\varwidth{\let\@minipagerestore\@vwid@setup \minipage}
+\cs_new_protected_nopar:Npn \varwidth {
+  \cs_set_eq:NN \@minipagerestore \__vwid_setup
+  \minipage
+}
 
 % Many things may appear on vertical lists that can't be re-processed,
 % so they have to be modified. 
 
-\def\@vwid@setup{%
+\cs_new_protected_nopar:Npn \__vwid_setup {
   % several things can't appear in vertical mode, so they may get 
   % a \vbox wrapped around them.
-  \let\@bsphack\@vwid@bsphack % \label and others
-  \let\mark\@gobble % Marks disappear in minipages anyway
-  \let\special\@vwid@special % \color and others
-  \let\pdfliteral\@vwid@pdfliteral % \color and others
-  \let\addtocontents\@vwid@addtocontents % \addcontentsline
+  \cs_set_eq:NN \@bsphack \__vwid_bsphack % \label and others
+  \cs_set_eq:NN \mark \@gobble % Marks disappear in minipages anyway
+  \cs_set_eq:NN \special \__vwid_special % \color and others
+  \cs_set_eq:NN \pdfliteral \__vwid_pdfliteral % \color and others
+  \cs_set_eq:NN \addtocontents \__vwid_addtocontents % \addcontentsline
   % Shifted boxes (\parshape,\hangindent) will have their shifts
   % indicated in a separate box.
-  \let\@hangfrom\@vwid@hangfrom % hanging indents
-  \let\list\@vwid@list
-  \let\endtrivlist\@vwid@endtrivlist
-  \postdisplaypenalty\@vwid@posteqp
-  \predisplaypenalty\@vwid@preeqp
-  \def\@eqnnum{\aftergroup\@vwid@afterva\@@vwid@eqnnum}%
+  \cs_set_eq:NN \@hangfrom \__vwid_hangfrom % hanging indents
+  \cs_set_eq:NN \list \__vwid_list
+  \cs_set_eq:NN \endtrivlist \__vwid_endtrivlist
+  \postdisplaypenalty\c__vwid_posteqp_token
+  \predisplaypenalty\c__vwid_preeqp_token
+  \cs_set_nopar:Npn \@eqnnum {
+    \aftergroup \__vwid_afterva \__vwid_saved_@eqnnum
+  }
   \global\@vwid@roff\z@  \global\@vwid@loff\z@
   % Begin an inner minipage-like vertical box (in \@tempboxa)
-  \let\@minipagerestore\@@vwid@minipagerestore \@minipagerestore
+  \cs_set_eq:NN \@minipagerestore \__vwid_saved_@minipagerestore
+  \@minipagerestore
   \setbox\@tempboxa\vbox\bgroup\begingroup
   % Flag the top of the list
-  \penalty\@vwid@toppen
+  \penalty\c__vwid_toppen_token
 }
 
-\let\@@vwid@minipagerestore\@minipagerestore
+\cs_new_eq:NN \__vwid_saved_@minipagerestore \@minipagerestore
 
 %  At end of varwidth environment.
-\def\endvarwidth{\par\@@par
+\cs_new_protected_nopar:Npn \endvarwidth {
+   \par\@@par
    \unskip
    % Handle minipage-style notes.
    \ifvoid\@mpfootins\else
      \vskip\skip\@mpfootins
      \normalcolor
-     \@vwid@wrap\footnoterule
+     \__vwid_wrap\footnoterule
      \unvbox\@mpfootins
    \fi
    \unskip
@@ -71,10 +81,10 @@
 %\message{First pass; hsize=\the\hsize...  }%{\tracingall\showlists}%%
      \unvcopy\@tempboxa
      \@tempdima-\maxdimen
-     \let\@vwid@resetb\@vwid@measure
-     \let\@vwid@append\relax
+     \cs_set_eq:NN \__vwid_resetb \__vwid_measure
+     \cs_set_eq:NN \__vwid_append \relax
      \sift@deathcycles\z@
-     \@vwid@sift
+     \__vwid_sift
      \xdef\@vwid@{\the\@tempdima}%
    \egroup\endgroup
    % Done measuring.  Now empty \@tempboxa onto current vertical list
@@ -86,17 +96,18 @@
      \hsize\@vwid@
    \fi
    % Go through the vertical list reboxing and moving everything into
-   % \@vwid@box; then spill \@vwid@box.  If the natural width is narrower,
-   \setbox\@vwid@box\vbox{}%
+   % \l__vwid_box; then spill \l__vwid_box.  If the natural width is narrower,
+   \setbox\l__vwid_box\vbox{}%
    \sift@deathcycles\z@
 %\message{----------------------------------------------------------------}%
 %\message{Second pass; hsize=\the\hsize...  }%{\tracingall\showlists}%
-   \@vwid@sift
+   \__vwid_sift
 %\message{After sifting:}%
-%{\showoutput\showbox\@vwid@box}%
-   \unvbox\@vwid@box
+%{\showoutput\showbox\l__vwid_box}%
+   \unvbox\l__vwid_box
    % end the minipage environment
-   \endminipage}
+   \endminipage
+}
 
 %
 % Here are definitions for sifting through the vertical list, either
@@ -104,16 +115,16 @@
 %
 % Penalties used as signals to the vertical-list processor:
 
-\mathchardef\@vwid@posteqp  17321 % Penalty below equations
-\mathchardef\@vwid@preeqp   17322 % Penalty above equations
-\mathchardef\@vwid@postnump 17323 % Penalty below numbered equations
-\mathchardef\@vwid@toppen   17324 % Penalty marking top of vertical list
-\mathchardef\@vwid@offsets  17325 % Penalty below special h-offsets box
-\mathchardef\@vwid@postw    17326 % Penalty below a \vbox-wrapped object
+\mathchardef \c__vwid_posteqp_token  17321 % Penalty below equations
+\mathchardef \c__vwid_preeqp_token   17322 % Penalty above equations
+\mathchardef \c__vwid_postnump_token 17323 % Penalty below numbered equations
+\mathchardef \c__vwid_toppen_token   17324 % Penalty marking top of vertical list
+\mathchardef \c__vwid_offsets_token  17325 % Penalty below special h-offsets box
+\mathchardef \c__vwid_postw_token    17326 % Penalty below a \vbox-wrapped object
 
 \newcount\sift@deathcycles
 
-\def\@vwid@sift{%
+\cs_new_protected_nopar:Npn \__vwid_sift {
   \skip@\lastskip\unskip
   \ifdim\lastskip=\z@\unskip\fi % <---- the first aid here (not just unskip)
   \dimen@\lastkern\unkern
@@ -122,49 +133,51 @@
 %{\showoutput\showbox\z@}%
   \ifvoid\z@ \advance\sift@deathcycles\@ne \else \sift@deathcycles\z@ \fi
   \ifnum\sift@deathcycles>33 
-    \let\@vwid@sift\relax
+    \cs_set_eq:NN \__vwid_sift \relax
     \PackageWarning{varwidth}{Failed~to~reprocess~entire~contents}%
   \fi
 %\message{\the\sift@deathcycles: skip \the\skip@; kern \the\dimen@; penalty \the\count@. }%
 %\ifhbox\z@\setbox99\hbox to0pt{\unhcopy\z@}\fi  % = message
-  \ifnum\count@=\@vwid@preeqp \@vwid@eqmodefalse\fi
-%\ifnum\count@=\@vwid@preeqp \message{End equation mode. }\fi
-  \ifnum\count@=\@vwid@posteqp \@vwid@eqmodetrue\fi
-%\ifnum\count@=\@vwid@posteqp\message{Begin equation mode. }\fi
+  \ifnum\count@=\c__vwid_preeqp_token \@vwid@eqmodefalse\fi
+%\ifnum\count@=\c__vwid_preeqp_token \message{End equation mode. }\fi
+  \ifnum\count@=\c__vwid_posteqp_token \@vwid@eqmodetrue\fi
+%\ifnum\count@=\c__vwid_posteqp_token\message{Begin equation mode. }\fi
 %\if@vwid@eqmode {\showoutput\showbox\z@}\fi
-  \ifnum\count@=\@vwid@toppen % finished
-    \let\@vwid@sift\relax
-  \else\ifnum\count@=\@vwid@offsets
-    \@vwid@setoffsets
+  \ifnum\count@=\c__vwid_toppen_token % finished
+    \cs_set_eq:NN \__vwid_sift \relax
+  \else\ifnum\count@=\c__vwid_offsets_token
+    \__vwid_setoffsets
   \else
-    \ifnum\count@=\@vwid@postw
+    \ifnum\count@=\c__vwid_postw_token
     \else
-      \@vwid@resetb % reset box \z@ or measure it
+      \__vwid_resetb % reset box \z@ or measure it
     \fi
-    \@vwid@append
+    \__vwid_append
   \fi\fi
-  \@vwid@sift}
+  \__vwid_sift
+}
 
-\def\@vwid@setoffsets{%
+\cs_new_protected_nopar:Npn \__vwid_setoffsets {
  \setbox\z@=\hbox{\unhbox\z@
   \global\@vwid@roff\lastkern\unkern
   \global\@vwid@loff\lastkern\unkern}%
 %\message{Set offsets to \the\@vwid@loff,  \the\@vwid@roff. }%
 }
 
-\def\@vwid@append{% Append contents of box \z@ and glue to \@vwid@box
-  \setbox\@vwid@box\vbox{%
+% Append contents of box \z@ and glue to \l__vwid_box
+\cs_new_protected_nopar:Npn \__vwid_append {
+  \setbox\l__vwid_box\vbox{%
     \unvbox\z@
     \ifdim\dimen@=\z@\else \kern\dimen@ \fi
     \vskip\skip@
-    \unvbox\@vwid@box
-  }%{\tracingall\showbox\@vwid@box}%
+    \unvbox\l__vwid_box
+  }%{\tracingall\showbox\l__vwid_box}%
 }
 
 %  reset box \z@ to \hsize, applying shifts, and wrap in vbox
 %  Don't worry about numbered equations because we won't get
 %  here if there are any.
-\def\@vwid@resetb{%
+\cs_new_protected_nopar:Npn \__vwid_resetb {
   \setbox\z@\vbox\bgroup
     \ifvoid\z@
     \else
@@ -190,18 +203,19 @@
 %\message{Plain narrow box}%
               \box\z@
     \fi\fi\fi\fi
-  \egroup}
+  \egroup
+}
 
 
 % Measure a line (in box \z@) and keep a running tally of the
 % widest natural width in \@tempdima
 
-\def\@vwid@measure{%
+\cs_new_protected_nopar:Npn \__vwid_measure {
   \ifvoid\z@
   \else
     % numbered equations not part of alignments can't be reset,
     % so force retention of full width.
-    \ifnum\count@=\@vwid@postnump \ifdim\wd\z@<\linewidth
+    \ifnum\count@=\c__vwid_postnump_token \ifdim\wd\z@<\linewidth
       \ifdim\@tempdima<\linewidth \@tempdima\linewidth \fi
     \fi\fi
     \ifhbox\z@
@@ -209,86 +223,122 @@
         {\kern\@vwid@loff \unhbox\z@ \kern\@vwid@roff}%
     \fi
     \ifdim\wd\z@>\@tempdima \@tempdima\wd\z@ \fi
-  \fi}
+  \fi
+}
 
 \newdimen\@vwid@loff
 \newdimen\@vwid@roff
 
-\let\@@bsphack\@bsphack
-\let\@@esphack\@esphack
-\let\@@Esphack\@Esphack
+\cs_new_eq:NN \__vwid_saved_@bsphack \@bsphack
+\cs_new_eq:NN \__vwid_saved_@esphack \@esphack
+\cs_new_eq:NN \__vwid_saved_@Esphack \@Esphack
 
-\def\@vwid@bsphack{\@@bsphack
-  \ifx\@vwid@wrap\@firstofone
+\cs_new_protected_nopar:Npn \__vwid_bsphack {
+  \__vwid_saved_@bsphack
+  \ifx\__vwid_wrap\@firstofone
     \bgroup
   \else
     \ifvmode
-      \setbox\@vwid@box \vbox\bgroup \vbox\bgroup
-      \let\@vwid@wrap\@firstofone
-      \def\@esphack{\@vwid@esphack\@@esphack}%
-      \def\@Esphack{\@vwid@esphack\@@Esphack}%
+      \setbox\l__vwid_box \vbox\bgroup \vbox\bgroup
+      \cs_set_eq:NN \__vwid_wrap \@firstofone
+      \cs_set_nopar:Npn \@esphack {
+        \__vwid_esphack \__vwid_saved_@esphack
+      }
+      \cs_set_nopar:Npn \@Esphack {
+        \__vwid_esphack \__vwid_saved_@Esphack
+      }
     \fi
-  \fi}
+  \fi
+}
 
-\def\@vwid@esphack{\egroup
-  \ifx\@vwid@wrap\@firstofone\else
+\cs_new_protected_nopar:Npn \__vwid_esphack {
+  \egroup
+  \ifx\__vwid_wrap\@firstofone\else
     \egroup % end outer box
-    \unvbox\@vwid@box % put inner box on list without lineskip
-    \penalty\@vwid@postw
-  \fi}
+    \unvbox\l__vwid_box % put inner box on list without lineskip
+    \penalty\c__vwid_postw_token
+  \fi
+}
 
 % \vbox Wrapper for misc vlist items
-\long\def\@vwid@wrap{\relax
-  \ifvmode\expandafter\@vwid@dowrap \else \expandafter\@firstofone \fi}
-\long\def\@vwid@dowrap#1{%
-  \setbox\@vwid@box \vbox{\vbox{\let\@vwid@wrap\@firstofone
-    #1}\penalty\@vwid@postw
-  }\unvbox\@vwid@box }
+\cs_new_protected:Npn \__vwid_wrap {
+  \relax
+  \ifvmode\expandafter\__vwid_do_wrap \else \expandafter\@firstofone \fi
+}
+\cs_new_protected:Npn \__vwid_do_wrap #1 {
+  \setbox \l__vwid_box \vbox {
+    \vbox {
+      \cs_set_eq:NN \__vwid_wrap \@firstofone
+      #1
+    }
+    \penalty \c__vwid_postw_token
+  }
+  \unvbox \l__vwid_box
+}
 
-\let\@@vwid@special\special
-\let\@@vwid@pdfliteral\pdfliteral
-\let\@@vwid@addtocontents\addtocontents
-\let\@@vwid@list\list
-\let\@@vwid@endtrivlist\endtrivlist
-\let\@@vwid@eqnnum\@eqnnum
+\cs_new_eq:NN \__vwid_saved_special       \special
+\cs_new_eq:NN \__vwid_saved_pdfliteral    \pdfliteral
+\cs_new_eq:NN \__vwid_saved_addtocontents \addtocontents
+\cs_new_eq:NN \__vwid_saved_list          \list
+\cs_new_eq:NN \__vwid_saved_endtrivlist   \endtrivlist
+\cs_new_eq:NN \__vwid_saved_@eqnnum       \@eqnnum
 
-\long\def\@vwid@special#1{\@vwid@wrap{\@@vwid@special{#1}}}
-\long\def\@vwid@pdfliteral#1{\@vwid@wrap{\@@vwid@pdfliteral{#1}}}
-\long\def\@vwid@addtocontents#1#2{\@vwid@wrap{\@@vwid@addtocontents{#1}{#2}}}
+\cs_new_protected:Npn \__vwid_special #1 {
+  \__vwid_wrap{\__vwid_saved_special{#1}}
+}
 
-\long\def\@vwid@hangfrom#1{\par
+\cs_new_protected:Npn \__vwid_pdfliteral #1 {
+  \__vwid_wrap{\__vwid_saved_pdfliteral{#1}}
+}
+
+\cs_new_protected:Npn \__vwid_addtocontents #1 #2 {
+  \__vwid_wrap{\__vwid_saved_addtocontents{#1}{#2}}
+}
+
+\cs_new_protected:Npn \__vwid_hangfrom #1 {
+  \par
   \setbox\@tempboxa\hbox{{#1}}%
-  \setbox\@vwid@box \vbox{\hbox{\kern\z@ \kern\z@
-   }\penalty\@vwid@offsets}\unvbox\@vwid@box
-  \def\par{\relax\ifhmode\unskip\fi
-    \vadjust{\hbox{\kern\hangindent\kern\z@}\penalty\@vwid@offsets}%
-    \@restorepar\par}%
-  \hangindent \wd\@tempboxa\noindent\box\@tempboxa}
+  \setbox\l__vwid_box \vbox{\hbox{\kern\z@ \kern\z@
+   }\penalty\c__vwid_offsets_token}\unvbox\l__vwid_box
+  \cs_set_nopar:Npn \par {
+    \relax\ifhmode\unskip\fi
+    \vadjust{\hbox{\kern\hangindent\kern\z@}\penalty\c__vwid_offsets_token}
+    \@restorepar\par
+  }
+  \hangindent \wd\@tempboxa\noindent\box\@tempboxa
+}
 
-\def\@vwid@list{\@vwid@setlist\@@vwid@list}
-\def\@vwid@endtrivlist{\@vwid@setlist\@@vwid@endtrivlist}
+\cs_new_protected_nopar:Npn \__vwid_list {
+  \__vwid_setlist\__vwid_saved_list
+}
 
-\def\@vwid@setlist{\relax\ifhmode \unskip\expandafter\vadjust\fi
-  {\setbox\@vwid@box \vbox{\hbox{%
+\cs_new_protected_nopar:Npn \__vwid_endtrivlist {
+  \__vwid_setlist\__vwid_saved_endtrivlist
+}
+
+\cs_new_protected_nopar:Npn \__vwid_setlist {
+  \relax\ifhmode \unskip\expandafter\vadjust\fi
+  {\setbox\l__vwid_box \vbox{\hbox{%
     \advance\hsize-\linewidth \advance\hsize-\@totalleftmargin
     \kern\@totalleftmargin  \kern\hsize}%
-    \penalty\@vwid@offsets}%
-   \unvbox\@vwid@box}}
+    \penalty\c__vwid_offsets_token}%
+   \unvbox\l__vwid_box}
+}
 
 \newif\if@vwid@eqmode
 
-\def\@vwid@afterva{\vadjust{\penalty\@vwid@postnump}}
+\cs_new_protected_nopar:Npn \__vwid_afterva {
+  \vadjust{\penalty\c__vwid_postnump_token}
+}
 
 %  Should I do this? ...
 
-\@ifundefined{newcolumntype}{}{%
+\@ifundefined{newcolumntype}{}{
  \@ifundefined{NC@rewrite@V}{
- \newcolumntype{V}[1]{%
-   >{\begin{varwidth}[t]{#1}\narrowragged\let\\\tabularnewline}%
-   l%
+ \newcolumntype{V}[1]{
+   >{\begin{varwidth}[t]{#1}\narrowragged\cs_set_eq:NN\\\tabularnewline}
+   l
    <{\@finalstrut\@arstrutbox\end{varwidth}}}
  }{}
 }
 
-% V 0.91  Always restack contents, even if width didn't change.
-% V 0.92  fix \special, \pdfliteral
