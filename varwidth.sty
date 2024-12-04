@@ -18,6 +18,9 @@
 }
 
 \box_new:N \l__vwid_box
+\box_new:N \l__vwid_temp_box
+\box_new:N \l__vwid_last_box
+\box_new:N \l__vwid_zero_box
 
 % The varwidth environment is based on minipage, and takes the same
 % parameters, but the specified width is only a limit -- a narrower
@@ -50,10 +53,10 @@
     \aftergroup \__vwid_afterva \__vwid_saved_@eqnnum
   }
   \global\@vwid@roff\z@  \global\@vwid@loff\z@
-  % Begin an inner minipage-like vertical box (in \@tempboxa)
+  % Begin an inner minipage-like vertical box (in \l__vwid_temp_box)
   \cs_set_eq:NN \@minipagerestore \__vwid_saved_@minipagerestore
   \@minipagerestore
-  \setbox\@tempboxa\vbox\bgroup\begingroup
+  \setbox\l__vwid_temp_box\vbox\bgroup\begingroup
   % Flag the top of the list
   \penalty\c__vwid_toppen_token
 }
@@ -73,13 +76,13 @@
    \fi
    \unskip
    \@minipagefalse
-   \endgroup\egroup % got my \@tempboxa
-   %{\showoutput\showbox\@tempboxa}%
+   \endgroup\egroup % got my \l__vwid_temp_box
+   %{\showoutput\showbox\l__vwid_temp_box}%
    % in a discarded box, sift through list measuring max width.
-   \begingroup\setbox\z@\vbox\bgroup
+   \begingroup\setbox\l__vwid_zero_box\vbox\bgroup
 %\message{-------------------------------------------------------------}%
 %\message{First pass; hsize=\the\hsize...  }%{\tracingall\showlists}%%
-     \unvcopy\@tempboxa
+     \unvcopy\l__vwid_temp_box
      \@tempdima-\maxdimen
      \cs_set_eq:NN \__vwid_resetb \__vwid_measure
      \cs_set_eq:NN \__vwid_append \relax
@@ -87,10 +90,10 @@
      \__vwid_sift
      \xdef\@vwid@{\the\@tempdima}%
    \egroup\endgroup
-   % Done measuring.  Now empty \@tempboxa onto current vertical list
+   % Done measuring.  Now empty \l__vwid_temp_box onto current vertical list
    % which is the contents of a minipage environment
 %\message{Got natural width \@vwid@ (compare \the\hsize) }%
-   \unvbox\@tempboxa
+   \unvbox\l__vwid_temp_box
    % Choose the natural width or the declared width, whichever is smaller.
    \ifdim\@vwid@<\hsize
      \hsize\@vwid@
@@ -129,20 +132,20 @@
   \ifdim\lastskip=\z@\unskip\fi % <---- the first aid here (not just unskip)
   \dimen@\lastkern\unkern
   \count@\lastpenalty\unpenalty
-  \setbox\z@\lastbox
-%{\showoutput\showbox\z@}%
-  \ifvoid\z@ \advance\sift@deathcycles\@ne \else \sift@deathcycles\z@ \fi
+  \setbox\l__vwid_last_box\lastbox
+%{\showoutput\showbox\l__vwid_last_box}%
+  \ifvoid\l__vwid_last_box \advance\sift@deathcycles\@ne \else \sift@deathcycles\z@ \fi
   \ifnum\sift@deathcycles>33 
     \cs_set_eq:NN \__vwid_sift \relax
     \PackageWarning{varwidth}{Failed~to~reprocess~entire~contents}%
   \fi
 %\message{\the\sift@deathcycles: skip \the\skip@; kern \the\dimen@; penalty \the\count@. }%
-%\ifhbox\z@\setbox99\hbox to0pt{\unhcopy\z@}\fi  % = message
+%\ifhbox\l__vwid_last_box\setbox99\hbox to0pt{\unhcopy\l__vwid_last_box}\fi  % = message
   \ifnum\count@=\c__vwid_preeqp_token \@vwid@eqmodefalse\fi
 %\ifnum\count@=\c__vwid_preeqp_token \message{End equation mode. }\fi
   \ifnum\count@=\c__vwid_posteqp_token \@vwid@eqmodetrue\fi
 %\ifnum\count@=\c__vwid_posteqp_token\message{Begin equation mode. }\fi
-%\if@vwid@eqmode {\showoutput\showbox\z@}\fi
+%\if@vwid@eqmode {\showoutput\showbox\l__vwid_last_box}\fi
   \ifnum\count@=\c__vwid_toppen_token % finished
     \cs_set_eq:NN \__vwid_sift \relax
   \else\ifnum\count@=\c__vwid_offsets_token
@@ -150,7 +153,7 @@
   \else
     \ifnum\count@=\c__vwid_postw_token
     \else
-      \__vwid_resetb % reset box \z@ or measure it
+      \__vwid_resetb % reset \l__vwid_last_box or measure it
     \fi
     \__vwid_append
   \fi\fi
@@ -158,71 +161,71 @@
 }
 
 \cs_new_protected_nopar:Npn \__vwid_setoffsets {
- \setbox\z@=\hbox{\unhbox\z@
+ \setbox\l__vwid_last_box=\hbox{\unhbox\l__vwid_last_box
   \global\@vwid@roff\lastkern\unkern
   \global\@vwid@loff\lastkern\unkern}%
 %\message{Set offsets to \the\@vwid@loff,  \the\@vwid@roff. }%
 }
 
-% Append contents of box \z@ and glue to \l__vwid_box
+% Append contents of \l__vwid_last_box and glue to \l__vwid_box
 \cs_new_protected_nopar:Npn \__vwid_append {
   \setbox\l__vwid_box\vbox{%
-    \unvbox\z@
+    \unvbox\l__vwid_last_box
     \ifdim\dimen@=\z@\else \kern\dimen@ \fi
     \vskip\skip@
     \unvbox\l__vwid_box
   }%{\tracingall\showbox\l__vwid_box}%
 }
 
-%  reset box \z@ to \hsize, applying shifts, and wrap in vbox
+%  reset \l__vwid_last_box to \hsize, applying shifts, and wrap in vbox
 %  Don't worry about numbered equations because we won't get
 %  here if there are any.
 \cs_new_protected_nopar:Npn \__vwid_resetb {
-  \setbox\z@\vbox\bgroup
-    \ifvoid\z@
+  \setbox\l__vwid_last_box\vbox\bgroup
+    \ifvoid\l__vwid_last_box
     \else
-       \ifvbox\z@
-         \box\z@
+       \ifvbox\l__vwid_last_box
+         \box\l__vwid_last_box
        \else % \hbox
          \@tempdima\hsize
          \advance\@tempdima-\@vwid@roff
          \advance\@tempdima-\@vwid@loff
          \advance\@tempdima-\p@
-%\message{Test if \the\wd\z@ > \the\@tempdima, }%
-         \ifdim\wd\z@>\@tempdima % full-width line; rebox it
-%\message{An ordinary line or alignment. (\the\wd\z@ > \the\@tempdima) }%
+%\message{Test if \the\wd\l__vwid_last_box > \the\@tempdima, }%
+         \ifdim\wd\l__vwid_last_box>\@tempdima % full-width line; rebox it
+%\message{An ordinary line or alignment. (\the\wd\l__vwid_last_box > \the\@tempdima) }%
             \hbox to\hsize
-              {\kern\@vwid@loff \unhbox\z@ \kern\@vwid@roff}%
+              {\kern\@vwid@loff \unhbox\l__vwid_last_box \kern\@vwid@roff}%
          \else % an equation or direct \hbox
            \if@vwid@eqmode % re-center unnumbered equations
 %\message{A centered equation hsize=\the\hsize. }%
               \hbox to\hsize
                 {\hskip\@vwid@loff\@plus1fil
-                 \unhbox\z@ \hskip\@vwid@roff\@plus1fil}%
+                 \unhbox\l__vwid_last_box \hskip\@vwid@roff\@plus1fil}%
            \else % plain narrow \hbox; leave it as-is
 %\message{Plain narrow box}%
-              \box\z@
+              \box\l__vwid_last_box
     \fi\fi\fi\fi
   \egroup
 }
 
 
-% Measure a line (in box \z@) and keep a running tally of the
+% Measure a line (in \l__vwid_last_box) and keep a running tally of the
 % widest natural width in \@tempdima
 
 \cs_new_protected_nopar:Npn \__vwid_measure {
-  \ifvoid\z@
+  \ifvoid\l__vwid_last_box
   \else
     % numbered equations not part of alignments can't be reset,
     % so force retention of full width.
-    \ifnum\count@=\c__vwid_postnump_token \ifdim\wd\z@<\linewidth
+    \ifnum\count@=\c__vwid_postnump_token \ifdim\wd\l__vwid_last_box<\linewidth
       \ifdim\@tempdima<\linewidth \@tempdima\linewidth \fi
     \fi\fi
-    \ifhbox\z@
-      \setbox\z@=\hbox
-        {\kern\@vwid@loff \unhbox\z@ \kern\@vwid@roff}%
+    \ifhbox\l__vwid_last_box
+      \setbox\l__vwid_last_box=\hbox
+        {\kern\@vwid@loff \unhbox\l__vwid_last_box \kern\@vwid@roff}%
     \fi
-    \ifdim\wd\z@>\@tempdima \@tempdima\wd\z@ \fi
+    \ifdim\wd\l__vwid_last_box>\@tempdima \@tempdima\wd\l__vwid_last_box \fi
   \fi
 }
 
@@ -297,7 +300,7 @@
 
 \cs_new_protected:Npn \__vwid_hangfrom #1 {
   \par
-  \setbox\@tempboxa\hbox{{#1}}%
+  \setbox\l__vwid_temp_box\hbox{{#1}}%
   \setbox\l__vwid_box \vbox{\hbox{\kern\z@ \kern\z@
    }\penalty\c__vwid_offsets_token}\unvbox\l__vwid_box
   \cs_set_nopar:Npn \par {
@@ -305,7 +308,7 @@
     \vadjust{\hbox{\kern\hangindent\kern\z@}\penalty\c__vwid_offsets_token}
     \@restorepar\par
   }
-  \hangindent \wd\@tempboxa\noindent\box\@tempboxa
+  \hangindent \wd\l__vwid_temp_box\noindent\box\l__vwid_temp_box
 }
 
 \cs_new_protected_nopar:Npn \__vwid_list {
