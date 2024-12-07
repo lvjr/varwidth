@@ -47,31 +47,36 @@
   \cs_set_eq:NN \@hangfrom \__vwid_hangfrom % hanging indents
   \cs_set_eq:NN \list \__vwid_list
   \cs_set_eq:NN \endtrivlist \__vwid_endtrivlist
-  \postdisplaypenalty\c__vwid_posteqp_token
-  \predisplaypenalty\c__vwid_preeqp_token
+  \postdisplaypenalty \c__vwid_posteqp_token
+  \predisplaypenalty \c__vwid_preeqp_token
   \cs_set_nopar:Npn \@eqnnum {
     \aftergroup \__vwid_afterva \__vwid_saved_@eqnnum
   }
-  \global\@vwid@roff\z@  \global\@vwid@loff\z@
+  \dim_gzero:N \g__vwid_roff_dim
+  \dim_gzero:N \g__vwid_loff_dim
   % Begin an inner minipage-like vertical box (in \l__vwid_temp_box)
   \cs_set_eq:NN \@minipagerestore \__vwid_saved_@minipagerestore
   \@minipagerestore
   \setbox \l__vwid_temp_box \vbox\bgroup\begingroup
   % Flag the top of the list
-  \penalty\c__vwid_toppen_token
+  \penalty \c__vwid_toppen_token
 }
 
 \cs_new_eq:NN \__vwid_saved_@minipagerestore \@minipagerestore
+\dim_new:N \l__vwid_temp_dim
+\dim_new:N \g__vwid_width_dim
 
 %  At end of varwidth environment.
 \cs_new_protected_nopar:Npn \endvarwidth {
-   \par\@@par
+   \par
+   \@@par
    \unskip
    % Handle minipage-style notes.
    \box_if_empty:NF \@mpfootins {
-     \vskip\skip\@mpfootins
+     \vskip \skip\@mpfootins
      \normalcolor
-     \__vwid_wrap\footnoterule
+     \__vwid_wrap
+     \footnoterule
      \vbox_unpack_drop:N \@mpfootins
    }
    \unskip
@@ -84,26 +89,26 @@
 %\message{-------------------------------------------------------------}%
 %\message{First pass; hsize=\the\hsize...  }%{\tracingall\showlists}%%
      \vbox_unpack:N \l__vwid_temp_box
-     \@tempdima-\maxdimen
+     \dim_set:Nn \l__vwid_temp_dim { -\c_max_dim }
      \cs_set_eq:NN \__vwid_resetb \__vwid_measure
      \cs_set_eq:NN \__vwid_append \relax
-     \l__vwid_sift_deathcycles_int\z@
+     \int_zero:N \l__vwid_sift_deathcycles_int
      \__vwid_sift
-     \xdef\@vwid@{\the\@tempdima}
+     \dim_gset_eq:NN \g__vwid_width_dim \l__vwid_temp_dim
    }
    \endgroup
    % Done measuring.  Now empty \l__vwid_temp_box onto current vertical list
    % which is the contents of a minipage environment
-%\message{Got natural width \@vwid@ (compare \the\hsize) }%
+%\message{Got natural width \g__vwid_width_dim (compare \hsize) }%
    \vbox_unpack_drop:N \l__vwid_temp_box
    % Choose the natural width or the declared width, whichever is smaller.
-   \dim_compare:nNnT { \@vwid@ } < { \hsize } {
-     \hsize\@vwid@
+   \dim_compare:nNnT { \g__vwid_width_dim } < { \hsize } {
+     \dim_set_eq:NN \hsize \g__vwid_width_dim
    }
    % Go through the vertical list reboxing and moving everything into
    % \l__vwid_box; then spill \l__vwid_box.  If the natural width is narrower,
    \vbox_set:Nn \l__vwid_box {}
-   \l__vwid_sift_deathcycles_int\z@
+   \int_zero:N \l__vwid_sift_deathcycles_int
 %\message{----------------------------------------------------------------}%
 %\message{Second pass; hsize=\the\hsize...  }%{\tracingall\showlists}%
    \__vwid_sift
@@ -129,39 +134,47 @@
 
 \int_new:N \l__vwid_sift_deathcycles_int
 
+\skip_new:N \l__vwid_last_skip
+\dim_new:N \l__vwid_last_dim
+\int_new:N \l__vwid_last_penalty_int
+
 \cs_new_protected_nopar:Npn \__vwid_sift {
-  \skip@\lastskip\unskip
+  \skip_set_eq:NN \l__vwid_last_skip \lastskip
+  \unskip
   % the following line is a patch from latex firstaid (not just unskip)
-  \dim_compare:nNnT { \lastskip } = { 0pt } { \unskip }
-  \dimen@\lastkern\unkern
-  \count@\lastpenalty\unpenalty
+  \dim_compare:nNnT { \lastskip } = { \c_zero_dim } { \unskip }
+  \dim_set_eq:NN \l__vwid_last_dim \lastkern
+  \unkern
+  \int_set_eq:NN \l__vwid_last_penalty_int \lastpenalty
+  \unpenalty
   \box_set_to_last:N \l__vwid_last_box
 %{\showoutput\showbox\l__vwid_last_box}%
   \box_if_empty:NTF \l__vwid_last_box
-    { \advance\l__vwid_sift_deathcycles_int\@ne }
-    { \l__vwid_sift_deathcycles_int\z@ }
+    { \int_incr:N \l__vwid_sift_deathcycles_int }
+    { \int_zero:N \l__vwid_sift_deathcycles_int }
   \int_compare:nNnT { \l__vwid_sift_deathcycles_int } > { 33 } {
     \cs_set_eq:NN \__vwid_sift \relax
-    \PackageWarning{varwidth}{Failed~to~reprocess~entire~contents}%
+    \PackageWarning { varwidth } { Failed ~ to ~ reprocess ~ entire ~ contents }
   }
-%\message{\the\l__vwid_sift_deathcycles_int: skip \the\skip@; kern \the\dimen@; penalty \the\count@. }%
+%\message{\the\l__vwid_sift_deathcycles_int: skip \the\l__vwid_last_skip;
+%         kern \the\l__vwid_last_dim; penalty \the\l__vwid_last_penalty_int. }%
 %\ifhbox\l__vwid_last_box\setbox99\hbox to0pt{\hbox_unpack:N\l__vwid_last_box}\fi  % = message
-  \int_compare:nNnT { \count@ } = { \c__vwid_preeqp_token } {
+  \int_compare:nNnT { \l__vwid_last_penalty_int } = { \c__vwid_preeqp_token } {
     \bool_set_false:N \l__vwid_eqmode_bool
   }
-%\ifnum\count@=\c__vwid_preeqp_token \message{End equation mode. }\fi
-  \int_compare:nNnT { \count@ } = { \c__vwid_posteqp_token } {
+%\ifnum\l__vwid_last_penalty_int=\c__vwid_preeqp_token \message{End equation mode. }\fi
+  \int_compare:nNnT { \l__vwid_last_penalty_int } = { \c__vwid_posteqp_token } {
     \bool_set_true:N \l__vwid_eqmode_bool
   }
-%\ifnum\count@=\c__vwid_posteqp_token\message{Begin equation mode. }\fi
+%\ifnum\l__vwid_last_penalty_int=\c__vwid_posteqp_token\message{Begin equation mode. }\fi
 %\bool_if:NT \l__vwid_eqmode_bool {{\showoutput\showbox\l__vwid_last_box}}
-  \int_compare:nNnTF { \count@ } = { \c__vwid_toppen_token } { % finished
+  \int_compare:nNnTF { \l__vwid_last_penalty_int } = { \c__vwid_toppen_token } { % finished
     \cs_set_eq:NN \__vwid_sift \relax
   }{
-    \int_compare:nNnTF { \count@ } = { \c__vwid_offsets_token } {
+    \int_compare:nNnTF { \l__vwid_last_penalty_int } = { \c__vwid_offsets_token } {
       \__vwid_setoffsets
     }{
-      \int_compare:nNnF { \count@ } = { \c__vwid_postw_token } {
+      \int_compare:nNnF { \l__vwid_last_penalty_int } = { \c__vwid_postw_token } {
         \__vwid_resetb % reset \l__vwid_last_box or measure it
       }
       \__vwid_append
@@ -173,18 +186,20 @@
 \cs_new_protected_nopar:Npn \__vwid_setoffsets {
   \hbox_set:Nn \l__vwid_last_box {
     \hbox_unpack_drop:N \l__vwid_last_box
-    \global\@vwid@roff\lastkern\unkern
-    \global\@vwid@loff\lastkern\unkern
+    \dim_gset_eq:NN \g__vwid_roff_dim \lastkern
+    \unkern
+    \dim_gset_eq:NN \g__vwid_loff_dim \lastkern
+    \unkern
   }
-%\message{Set offsets to \the\@vwid@loff,  \the\@vwid@roff. }%
+%\message{Set offsets to \the\g__vwid_loff_dim,  \the\g__vwid_roff_dim. }%
 }
 
 % Append contents of \l__vwid_last_box and glue to \l__vwid_box
 \cs_new_protected_nopar:Npn \__vwid_append {
   \vbox_set:Nn \l__vwid_box {
     \vbox_unpack_drop:N \l__vwid_last_box
-    \dim_compare:nNnF { \dimen@ } = { 0pt } { \kern\dimen@ }
-    \vskip\skip@
+    \dim_compare:nNnF { \l__vwid_last_dim } = { \c_zero_dim } { \kern \l__vwid_last_dim }
+    \vskip \l__vwid_last_skip
     \vbox_unpack_drop:N \l__vwid_box
   }%{\tracingall\showbox\l__vwid_box}
 }
@@ -196,33 +211,32 @@
   \vbox_set:Nn \l__vwid_last_box {
     \box_if_empty:NF \l__vwid_last_box {
        \box_if_vertical:NTF \l__vwid_last_box {
-         \box\l__vwid_last_box
+         \box_use:N \l__vwid_last_box
        }{ % \hbox
-         \@tempdima\hsize
-         \advance\@tempdima-\@vwid@roff
-         \advance\@tempdima-\@vwid@loff
-         \advance\@tempdima-\p@
-%\message{Test if \the\wd\l__vwid_last_box > \the\@tempdima, }%
-         \dim_compare:nNnTF { \wd\l__vwid_last_box } > { \@tempdima }
+         \dim_set:Nn \l__vwid_temp_dim {
+           \hsize - \g__vwid_roff_dim - \g__vwid_loff_dim - 1pt
+         }
+%\message{Test if \the\wd\l__vwid_last_box > \the\l__vwid_temp_dim, }%
+         \dim_compare:nNnTF { \wd\l__vwid_last_box } > { \l__vwid_temp_dim }
          { % full-width line; rebox it
-%\message{An ordinary line or alignment. (\the\wd\l__vwid_last_box > \the\@tempdima) }%
+%\message{An ordinary line or alignment. (\the\wd\l__vwid_last_box > \the\l__vwid_temp_dim) }%
             \hbox to\hsize {
-              \kern \@vwid@loff
+              \kern \g__vwid_loff_dim
               \hbox_unpack_drop:N \l__vwid_last_box
-              \kern \@vwid@roff
+              \kern \g__vwid_roff_dim
             }
          }{ % an equation or direct \hbox
            \bool_if:NTF \l__vwid_eqmode_bool
            { % re-center unnumbered equations
 %\message{A centered equation hsize=\the\hsize. }%
               \hbox to\hsize {
-                \hskip \@vwid@loff\@plus1fil
+                \hskip \g__vwid_loff_dim plus 1fil
                 \hbox_unpack_drop:N \l__vwid_last_box
-                \hskip \@vwid@roff\@plus1fil
+                \hskip \g__vwid_roff_dim plus 1fil
               }
            }{ % plain narrow \hbox; leave it as-is
 %\message{Plain narrow box}%
-              \box\l__vwid_last_box
+              \box_use:N \l__vwid_last_box
            }
          }
        }
@@ -232,34 +246,34 @@
 
 
 % Measure a line (in \l__vwid_last_box) and keep a running tally of the
-% widest natural width in \@tempdima
+% widest natural width in \l__vwid_temp_dim
 
 \cs_new_protected_nopar:Npn \__vwid_measure {
   \box_if_empty:NF \l__vwid_last_box {
     % numbered equations not part of alignments can't be reset,
     % so force retention of full width.
-    \int_compare:nNnT { \count@ } = { \c__vwid_postnump_token } {
+    \int_compare:nNnT { \l__vwid_last_penalty_int } = { \c__vwid_postnump_token } {
       \dim_compare:nNnT { \wd\l__vwid_last_box } < { \linewidth } {
-        \dim_compare:nNnT { \@tempdima } < { \linewidth } {
-          \@tempdima\linewidth
+        \dim_compare:nNnT { \l__vwid_temp_dim } < { \linewidth } {
+          \dim_set_eq:NN \l__vwid_temp_dim \linewidth
         }
       }
     }
     \box_if_horizontal:NT \l__vwid_last_box {
       \hbox_set:Nn \l__vwid_last_box {
-        \kern\@vwid@loff
+        \kern \g__vwid_loff_dim
         \hbox_unpack_drop:N \l__vwid_last_box
-        \kern\@vwid@roff
+        \kern \g__vwid_roff_dim
       }
     }
-    \dim_compare:nNnT { \wd\l__vwid_last_box } > { \@tempdima } {
-      \@tempdima\wd\l__vwid_last_box
+    \dim_compare:nNnT { \wd\l__vwid_last_box } > { \l__vwid_temp_dim } {
+      \dim_set:Nn \l__vwid_temp_dim { \wd\l__vwid_last_box }
     }
   }
 }
 
-\newdimen\@vwid@loff
-\newdimen\@vwid@roff
+\dim_new:N \g__vwid_loff_dim
+\dim_new:N \g__vwid_roff_dim
 
 \cs_new_eq:NN \__vwid_saved_@bsphack \@bsphack
 \cs_new_eq:NN \__vwid_saved_@esphack \@esphack
@@ -316,40 +330,52 @@
 \cs_new_eq:NN \__vwid_saved_@eqnnum       \@eqnnum
 
 \cs_new_protected:Npn \__vwid_special #1 {
-  \__vwid_wrap{\__vwid_saved_special{#1}}
+  \__vwid_wrap { \__vwid_saved_special { #1 } }
 }
 
 \cs_new_protected:Npn \__vwid_pdfliteral #1 {
-  \__vwid_wrap{\__vwid_saved_pdfliteral{#1}}
+  \__vwid_wrap { \__vwid_saved_pdfliteral { #1 } }
 }
 
 \cs_new_protected:Npn \__vwid_addtocontents #1 #2 {
-  \__vwid_wrap{\__vwid_saved_addtocontents{#1}{#2}}
+  \__vwid_wrap { \__vwid_saved_addtocontents { #1 } { #2 } }
 }
 
 \cs_new_protected:Npn \__vwid_hangfrom #1 {
   \par
-  \hbox_set:Nn \l__vwid_temp_box {{#1}}
+  \hbox_set:Nn \l__vwid_temp_box { { #1 } }
   \vbox_set:Nn \l__vwid_box {
-    \hbox{\kern\z@ \kern\z@}
-    \penalty\c__vwid_offsets_token
+    \hbox {
+      \kern \c_zero_dim
+      \kern \c_zero_dim
+    }
+    \penalty \c__vwid_offsets_token
   }
   \vbox_unpack_drop:N \l__vwid_box
   \cs_set_nopar:Npn \par {
     \relax
     \mode_if_horizontal:T { \unskip }
-    \vadjust{\hbox{\kern\hangindent\kern\z@}\penalty\c__vwid_offsets_token}
-    \@restorepar\par
+    \vadjust {
+      \hbox {
+        \kern \hangindent
+        \kern \c_zero_dim
+      }
+      \penalty \c__vwid_offsets_token
+    }
+    \@restorepar
+    \par
   }
-  \hangindent \wd\l__vwid_temp_box\noindent\box\l__vwid_temp_box
+  \hangindent \wd\l__vwid_temp_box
+  \noindent
+  \box_use:N \l__vwid_temp_box
 }
 
 \cs_new_protected_nopar:Npn \__vwid_list {
-  \__vwid_setlist\__vwid_saved_list
+  \__vwid_setlist \__vwid_saved_list
 }
 
 \cs_new_protected_nopar:Npn \__vwid_endtrivlist {
-  \__vwid_setlist\__vwid_saved_endtrivlist
+  \__vwid_setlist \__vwid_saved_endtrivlist
 }
 
 \cs_new_protected_nopar:Npn \__vwid_setlist {
@@ -358,12 +384,11 @@
   {
     \vbox_set:Nn \l__vwid_box {
       \hbox {
-        \advance\hsize-\linewidth
-        \advance\hsize-\@totalleftmargin
-        \kern\@totalleftmargin
-        \kern\hsize
+        \dim_sub:Nn \hsize { \linewidth + \@totalleftmargin }
+        \kern \@totalleftmargin
+        \kern \hsize
       }
-      \penalty\c__vwid_offsets_token
+      \penalty \c__vwid_offsets_token
     }
     \vbox_unpack_drop:N \l__vwid_box
   }
@@ -372,7 +397,7 @@
 \bool_new:N \l__vwid_eqmode_bool
 
 \cs_new_protected_nopar:Npn \__vwid_afterva {
-  \vadjust{\penalty\c__vwid_postnump_token}
+  \vadjust { \penalty \c__vwid_postnump_token }
 }
 
 %  Should I do this? ...
